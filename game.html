@@ -1,0 +1,190 @@
+<html>
+<head>
+<title>game by charlie</title>
+</head>
+<body>
+<canvas id="game_container" width="800" height="600"></canvas>
+<script>
+
+
+function rand(min, max) {
+    var dif = max - min;
+    return (Math.floor((Math.random() * dif)) + min);
+}
+
+
+
+texture = new Image ();
+texture.src = "texture.jpg";
+
+var Camera = new Object();
+Camera.x = 40;
+Camera.y = 40
+Camera.speed = 3;
+Camera.xvel = 0;
+Camera.yvel = 0;
+
+var keys = new Object();
+keys.w = new Object();
+keys.a = new Object();
+
+keys.s = new Object();
+
+keys.d = new Object();
+
+
+
+var map = new Array();
+
+for (var map_x = 0; map_x < 100; map_x++) {
+
+  map[map_x] = new Array();
+  for (var map_y = 0; map_y < 100; map_y++) {
+     map[map_x][map_y] = new Object();
+     map[map_x][map_y].on = rand(1, 5);
+
+  }
+}
+
+
+xx = rand(0, 99);
+
+yy = rand(0, 99);
+console.log (map)
+alert(xx + " " + yy + " : " + map[xx][yy].on)
+
+
+
+
+
+document.onkeydown = function(e) {
+    e = e || window.event;
+
+    if (e.keyCode == 87) {
+        keys.w.on = 1;
+    }
+    if (e.keyCode == 83) {
+        keys.s.on = 1;
+    }
+    if (e.keyCode == 65) {
+        keys.a.on = 1;
+    }
+    if (e.keyCode == 68) {
+        keys.d.on = 1;
+    }
+
+    if (e.keyCode == 84) {
+        keys.t.on = 1;
+    }
+    if (e.keyCode == 89) {
+        keys.y.on = 1;
+    }
+
+
+};
+
+
+document.onkeyup = function(e) {
+    e = e || window.event;
+
+    if (e.keyCode == 87) {
+        keys.w.on = 0;
+    }
+    if (e.keyCode == 83) {
+        keys.s.on = 0;
+    }
+    if (e.keyCode == 65) {
+        keys.a.on = 0;
+    }
+    if (e.keyCode == 68) {
+        keys.d.on = 0;
+    }
+
+
+};
+
+
+
+
+canvas1 = document.getElementById('game_container');
+
+var ctx = canvas1.getContext('2d');
+
+
+
+function game_loop() {
+
+
+
+
+
+        if (keys.w.on == 1) {
+console.log(keys);
+            Camera.yvel -= Camera.speed;
+        }
+
+        if (keys.a.on == 1) {
+            Camera.xvel -= Camera.speed;
+        }
+
+
+        if (keys.s.on == 1) {
+            Camera.yvel += Camera.speed;
+        }
+
+        if (keys.d.on == 1) {
+            Camera.xvel += Camera.speed;
+        }
+
+        Camera.x = Camera.x + Camera.xvel;
+        Camera.y = Camera.y + Camera.yvel;
+
+        Camera.xvel = Math.round(Camera.xvel / 1.5);
+
+        Camera.yvel = Math.round(Camera.yvel / 1.5);
+
+
+
+
+
+
+
+
+
+
+
+
+    ctx.fillRect(0, 0, 1000, 1000);
+
+
+for (draw_x = 1; draw_x < 99; draw_x++) { 
+for (draw_y = 1; draw_y < 99; draw_y++) { 
+
+ if (map[draw_x][draw_y].on > 2) {  
+
+ctx.drawImage(texture, (draw_x * 50) - Camera.x, (draw_y * 50) - Camera.y, 50, 50);
+
+
+}
+
+
+}
+}
+
+
+
+
+
+}
+
+
+setInterval(game_loop, 99); 
+
+
+
+
+
+
+</script>
+</body>
+</html>
