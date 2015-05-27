@@ -25,8 +25,8 @@ player_img.src = "player.jpg";
 
 
 var player = new Object();
-player.x = 23;
-player.y = 23;
+player.x = 400;
+player.y = 400;
 player.speed = 4;
 player.xvel = 0;
 player.yvel = 0;
@@ -186,10 +186,13 @@ function game_loop() {
 
 
  var player_mapx = Math.round((player.x + 25) / 50)
-    var player_mapy = Math.round((player.y + 25) / 50)
-if (map[player_mapx][player_mapy].on == 0) {
+    var player_mapy = Math.round((player.y) / 50)
+if (map[player_mapx][player_mapy].on == 1) {
 player.xvel = 0-player.xvel;
 player.yvel = 0-player.yvel;
+map[player_mapx][player_mapy].on = 1;
+
+map = automata(map, "eroder" ,player_mapx - 2, player_mapy - 2,player_mapx + 2, player_mapy +2)
 
 }
 
@@ -200,7 +203,7 @@ player.yvel = 0-player.yvel;
 for (draw_x = 1; draw_x < 99; draw_x++) { 
 for (draw_y = 1; draw_y < 99; draw_y++) { 
 
- if (map[draw_x][draw_y].on > 0) {  
+ if (map[draw_x][draw_y].on < 1) {  
 
 ctx.drawImage(texture, (draw_x * 50) - Camera.x, (draw_y * 50) - Camera.y, 50, 50);
 
