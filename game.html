@@ -30,8 +30,8 @@ player_img.src = "player.jpg";
 var player = new Object();
 player.x = 400;
 player.y = 400;
-player.speed = 4;
-player.jump = 7;
+player.speed = 8;
+player.jump = 23;
 player.xvel = 0;
 player.yvel = 0;
 
@@ -213,15 +213,58 @@ function game_loop() {
  var player_oldx = Math.round((player.oldx) / 50)
     var player_oldy = Math.round((player.oldy - 25) / 50)
 
-if (map[player_oldx][player_mapy+1].on == 1) {
-player.y = player.oldy;
-} else {
-player.yvel = player.yvel + 1;//Math.round(player.yvel / 1.5);
-        }
-
-if (map[player_mapx][player_oldy+1].on == 1) {
-player.y = player.oldy;
+if (player.yvel > 0) {
+if (map[player_mapx][player_mapy+1].on == 1) {
+player.yvel = 0;
+player.y = (player_mapy * 50)
 }
+}
+
+if (player.yvel < 0) {
+if (map[player_mapx][player_mapy-1].on == 1) {
+  if (  (player.y)-(player_mapy*50) < 0 ) {
+   player.yvel = 0;
+  player.y = (player_mapy * 50)
+   }
+//player.y = (player_mapy * 50)
+}
+}
+
+if (player.xvel > 0) {
+ if (map[player_mapx+1][player_mapy].on == 1) {
+
+   if (  (player.x)-(player_mapx*50) > 0 ) {
+   player.xvel = 0;
+   player.x = (player_mapx * 50)
+   }
+
+  
+ }
+}
+
+if (player.xvel < 0) {
+if (map[player_mapx-1][player_mapy].on == 1) {
+
+  if (  (player.x)-(player_mapx*50) < 0 ) {
+player.xvel = 0;
+player.x = (player_mapx * 50)
+ }
+}
+}
+
+
+
+
+
+//if (map[player_oldx][player_mapy+1].on == 1) {
+//player.y = player.oldy;
+//} else {
+player.yvel = player.yvel + 3;//Math.round(player.yvel / 1.5);
+//        }
+
+//if (map[player_mapx][player_oldy+1].on == 1) {
+//player.y = player.oldy;
+//}
 
 
     ctx.fillRect(0, 0, 1000, 1000);
@@ -241,6 +284,8 @@ ctx.drawImage(texture, (draw_x * 50) - Camera.x, (draw_y * 50) - Camera.y, 50, 5
 
 }
 }
+//ctx.drawImage(player_img, (player_mapx * 50) - Camera.x, (player_mapy * 50) - Camera.y, 50, 50);
+
 ctx.drawImage(player_img, (player.x ) - Camera.x, (player.y ) - Camera.y, 50, 50);
 
 //map = gravity(map);
